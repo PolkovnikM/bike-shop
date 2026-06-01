@@ -1,0 +1,120 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: #0a0a0a;
+    color: #ffffff;
+}
+.widgets-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+.widgets-page h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+.widgets-page h1 span {
+    color: #00ff9d;
+}
+.subtitle {
+    color: #888;
+    margin-bottom: 40px;
+}
+.widget {
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 30px;
+}
+.widget h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #00ff9d;
+}
+/* Стили для слайдера */
+.slick-slide {
+    padding: 10px;
+}
+.slider-card {
+    background: #0a0a0a;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+}
+.slider-card h4 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+.slider-card p {
+    color: #888;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+.slider-card .price {
+    color: #00ff9d;
+    font-size: 18px;
+    font-weight: bold;
+}
+/* Стили для сравнения */
+.compare-selects {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+.compare-selects select {
+    background: #0a0a0a;
+    border: 1px solid #2a2a2a;
+    color: white;
+    padding: 10px 16px;
+    border-radius: 8px;
+    min-width: 200px;
+    cursor: pointer;
+}
+.compare-selects select:hover {
+    border-color: #00ff9d;
+}
+.compare-selects span {
+    color: #00ff9d;
+    font-weight: bold;
+}
+.compare-result table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.compare-result th {
+    background: #0a0a0a;
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #2a2a2a;
+}
+.compare-result td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #2a2a2a;
+}
+.compare-result .price {
+    color: #00ff9d;
+    font-weight: bold;
+}
+.compare-winner {
+    text-align: center;
+    margin-top: 20px;
+    padding: 12px;
+    background: rgba(0, 255, 157, 0.1);
+    border-radius: 8px;
+    color: #00ff9d;
+}
+.widget-loading {
+    text-align: center;
+    padding: 40px;
+    color: #888;
+}
