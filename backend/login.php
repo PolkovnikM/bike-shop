@@ -19,7 +19,7 @@
             <button type="submit">Войти</button>
         </form>
         <p>Нет аккаунта? <a href="register.php">Зарегистрироваться</a></p>
-        <a href="/bike-shop/index.html">← На главную</a>
+        <a href="/bike-shop/index.php"> На главную</a>
     </div>
 </body>
 </html>

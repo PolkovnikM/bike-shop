@@ -105,9 +105,33 @@ function removeFromCart(id) {
 function saveCart() { localStorage.setItem('bike_cart', JSON.stringify(cart)); }
 function loadCart() { const saved = localStorage.getItem('bike_cart'); if (saved) cart = JSON.parse(saved); updateCartCount(); }
 function clearCart() { cart = []; saveCart(); renderCart(); updateCartCount(); }
-function checkout() {
-    if (cart.length === 0) alert('Корзина пуста!');
-    else { alert(`Спасибо за заказ!\nСумма: ${cart.reduce((s, i) => s + i.price * i.quantity, 0).toLocaleString()} ₽`); clearCart(); showCatalog(); }
+async function checkout() {
+    if (cart.length === 0) {
+        alert('Корзина пуста!');
+        return;
+    }
+    // Проверка авторизации
+    const authCheck = await fetch('/bike-shop/backend/api/check-auth.php');
+    const authData = await authCheck.json();
+    if (!authData.authorized) {
+        alert('Для оформления заказа нужно войти в систему');
+        window.location.href = '/bike-shop/backend/login.php';
+        return;
+    }
+    // Отправка заказа
+    const response = await fetch('/bike-shop/backend/api/order.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cart: cart })
+    });
+    const data = await response.json();
+    if (data.status === 'success') {
+        alert(`Заказ №${data.order_id} оформлен!\nСумма: ${data.total.toLocaleString()} ₽`);
+        clearCart();
+        showCatalog();
+    } else {
+        alert('Ошибка: ' + data.message);
+    }
 }
 function filterProducts() {
     const category = document.getElementById('category-filter').value;

@@ -18,16 +18,24 @@ if ($password !== $confirm) {
     header('Location: register.php?error=password');
     exit;
 }
-$pdo = getDB();
-$stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
-$stmt->execute([$email]);
-if ($stmt->fetch()) {
-    header('Location: register.php?error=exists');
+try {
+    $pdo = getDB();
+    $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+    $stmt->execute([$email]);
+    if ($stmt->fetch()) {
+        header('Location: register.php?error=exists');
+        exit;
+    }
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+    $stmt = $pdo->prepare("INSERT INTO users (name, email, age, password_hash) VALUES (?, ?, ?, ?)");
+    $stmt->execute([$name, $email, $age, $hash]);
+    
+    writeLog($email, 'REGISTER', 'Новый пользователь зарегистрирован');
+    header('Location: login.php?success=registered');
+    exit;
+    
+} catch (PDOException $e) {
+    writeLog($email, 'REGISTER_ERROR', 'Ошибка: ' . $e->getMessage());
+    header('Location: register.php?error=db_error');
     exit;
 }
-$hash = password_hash($password, PASSWORD_DEFAULT);
-$stmt = $pdo->prepare("INSERT INTO users (name, email, age, password_hash) VALUES (?, ?, ?, ?)");
-$stmt->execute([$name, $email, $age, $hash]);
-header('Location: register.php?success=1');
-exit;
-?>

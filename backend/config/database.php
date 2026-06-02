@@ -13,12 +13,20 @@ function getDB() {
     }
 }
 
-function writeLog($login, $action, $message = '') {
+function writeLog($email, $action, $message = '') {
     $dir = __DIR__ . '/../logs';
     if (!is_dir($dir)) mkdir($dir, 0755, true);
     $file = $dir . '/auth.log';
-    $line = "[" . date('Y-m-d H:i:s') . "] | IP: " . $_SERVER['REMOTE_ADDR'] . " | Логин: $login | Действие: $action\n";
+    $time = date('Y-m-d H:i:s');
+    $ip = $_SERVER['REMOTE_ADDR'];
+    $line = "[$time] | IP: $ip | Логин: $email | Действие: $action\n";
     file_put_contents($file, $line, FILE_APPEND);
+    try {
+        $pdo = getDB();
+        $stmt = $pdo->prepare("INSERT INTO logs (user_email, action, ip_address, message) VALUES (?, ?, ?, ?)");
+        $stmt->execute([$email, $action, $ip, $message]);
+    } catch (PDOException $e) {
+    }
 }
 
 function getUsers() {
